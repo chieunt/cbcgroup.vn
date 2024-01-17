@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#65AF2F" />
+    <title>CBC Group</title>
+    <link href="cbcgroup-asset/Content/bootstrap.css" rel="stylesheet" />
+    <link href="cbcgroup-asset/Content/Site.css" rel="stylesheet" />
+    <link href="cbcgroup-asset/Content/pnotify/pnotify.custom.css" rel="stylesheet" />
+    <link href="cbcgroup-asset/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&amp;subset=vietnamese" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700,800&amp;subset=vietnamese" rel="stylesheet">
+    <meta property="og:title" content="CBC Group" />
+    
+</head>
+<body class="layout_login_bg">
+    <div class="body-sign">
+        
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="cbcgroup-assetasset/Scripts/jquery-1.10.2.min.js"></script>
+<script src="cbcgroup-asset/Scripts/easy.qrcode.min.js"></script>
+<script src="cbcgroup-asset/Scripts/pnotify/pnotify.custom.js"></script>
+<link href="cbcgroup-asset/Content/util.css" rel="stylesheet">
+<script type="text/javascript" src="cbcgroup-asset/Scripts/bootstrap.min.js"></script>
+<script src="cbcgroup-asset/Scripts/signalr.js"></script>
+<script src="cbcgroup-asset/Scripts/signalr.min.js"></script>
+<link href="cbcgroup-asset/Scripts/pnotify/pnotify.custom.css" rel="stylesheet">
+<style>
+        #huongdanLogin {
+            position: absolute;
+            top: 0;
+            right: calc(100% + 28px);
+            display: block;
+            width: 414px;
+            min-height:50px;
+            padding:20px;
+            text-align:left;
+            background: #2274E9;
+            border-radius: 4px;
+            color:#FFF;
+            box-shadow: 1px 2px 4px #00000057;
+        }
+        #huongdanLogin:before{
+            position: absolute;
+            display: block;
+            content: '';
+            top: 40px;
+            right: -5px;
+            width: 10px;
+            height: 10px;
+            margin-left: -5px;
+            background: #2274E9;
+            transform: rotate(-136deg);
+        }
+        #huongdanLogin a{
+            color:#FFF;
+            text-decoration: underline;
+            padding:6px 12px;
+        }
+        #huongdanLogin a.btn{
+            min-width:123px;
+            background: #FFF;
+            border-radius: 4px;
+            color:#3F85F5;
+            font-weight:bold;
+            text-decoration: none;
+        }
+        #huongdanLogin a.btn:hover{
+            text-decoration: underline;
+        }
+        #login .login-field, #login .login-sendEmail{
+            padding: 0;
+        }
+        @media (max-width: 550px) {
+            #huongdanLogin{
+                top: calc(100% + 13px);
+                left: 15px;
+                z-index: 200;
+                max-width: calc(100% - 40px);
+            }
+            #huongdanLogin:before{
+                top: -5px;
+                right: 50px;
+            }
+            #huongdanLogin a{
+                display:block;
+                margin-bottom: 16px;
+                text-align: center;
+            }
+            #huongdanLogin a.btn{
+                margin: 0 auto 0;
+                width: 155px;
+                max-width:100%;
+                min-width: initial;
+            }
+        }
+</style>
+<style>
+    #login .panel-login, #login .login-form {
+        width: auto;
+    }
+
+    .loginByID {
+        width: 360px;
+        max-width: 100%;
+    }
+
+    .img-thumbnail {
+        border: none;
+        padding: 0;
+    }
+
+    .content-qr-code {
+        position: relative;
+        display: block;
+        margin: 0 auto;
+        width: 200px;
+        height: 200px;
+        position: relative;
+        text-align: center;
+        filter: drop-shadow(0px 8px 8px rgba(24, 39, 75, 0.02)) drop-shadow(0px 6px 8px rgba(24, 39, 75, 0.2));
+    }
+
+    .rejeck-qr-code {
+        display: none;
+        color: red;
+    }
+
+        .rejeck-qr-code.active {
+            display: block;
+            color: #F02849;
+            text-align: center;
+            font-size: 11px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 16px;
+            margin-bottom: 0;
+        }
+
+    .qr-code.expired {
+        opacity: 0.2;
+    }
+
+    #qrcode-expired {
+        display: none;
+        position: absolute;
+    }
+
+        #qrcode-expired.active {
+            display: block;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            transform: translate(-50%, -50%);
+        }
+
+        #qrcode-expired b {
+            color: #212121;
+            font-family: Inter;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 16px;
+        }
+
+    .qr-code.img-responsive {
+        border-radius: 8px;
+    }
+
+    #qrcode-expired button {
+        background-color: #0190F3;
+        color: white;
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 20px;
+        padding: 8px 16px;
+    }
+
+        #qrcode-expired button:before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            display: inline-block;
+            background: url(/Content/images/Reload.svg) center no-repeat;
+            background-size: 20px;
+            margin-bottom: -4px;
+        }
+
+    .block-scan-qr {
+        display: none;
+    }
+
+        .block-scan-qr.active {
+            display: block;
+        }
+
+    .confirm-qr-code {
+        display: none;
+        width: 100%;
+    }
+
+        .confirm-qr-code.active {
+            display: block;
+        }
+
+        .confirm-qr-code .img-user-qr-code {
+            border-radius: 50%;
+            margin: auto !important;
+            width: 72px;
+            height: 72px;
+        }
+
+        .confirm-qr-code .user-name-qr-code {
+            color: #333;
+            font-size: 0.938em;
+            font-family: Inter;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 20px;
+            margin-bottom: 20px;
+        }
+
+        .confirm-qr-code .notification-qr-code {
+            padding: 0px 20px;
+            max-width: 330px;
+            margin: 0 auto;
+            padding: 0 12px;
+            color: #8C8C8C;
+            font-family: Inter;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 16px;
+            text-align: center;
+        }
+
+    #loading-qr-code {
+        display: none !important;
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+        #loading-qr-code.active {
+            display: block !important;
+        }
+
+    .taiApp {
+        cursor: pointer;
+    }
+
+    .scanText {
+        display: block;
+        position: relative;
+        float: none;
+        width: 232px;
+        margin: 16px auto 22px;
+        color: #212121;
+        padding-left: 48px;
+        background: url(/Content/images/scan-qr.svg) left center no-repeat;
+        background-size: 32px;
+        font-family: Inter;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px;
+        text-align: left;
+    }
+
+        .scanText a {
+            display: inline !important;
+            margin: 0 !important;
+        }
+
+            .scanText a:hover {
+                text-decoration: none !important;
+            }
+
+        .scanText + span {
+            color: #1877F2;
+            text-align: center;
+            font-family: Inter;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 16px;
+            margin-bottom: 16px;
+            display: block;
+            cursor: pointer;
+        }
+
+    #divHuongDanQR {
+        display: none;
+        float: left;
+        width: 600px;
+        max-width: 100%;
+        text-align: center;
+        padding: 20px;
+        border-radius: 16px;
+        background: #F9F9F9;
+        position: relative;
+        margin-bottom: 16px;
+    }
+
+        #divHuongDanQR .item {
+            display: block;
+            float: left;
+            width: 146px;
+            margin: 0 20px;
+            text-align: center;
+        }
+
+            #divHuongDanQR .item:last-child {
+                margin-right: 0;
+            }
+
+            #divHuongDanQR .item .phoneimg {
+                display: block;
+                position: relative;
+                margin-bottom: 26px;
+            }
+
+                #divHuongDanQR .item .phoneimg img {
+                    display: block;
+                    margin: 0 auto;
+                    height: 144px;
+                }
+
+                #divHuongDanQR .item .phoneimg i {
+                    display: block;
+                    width: 16px;
+                    height: 16px;
+                    background: #E82429;
+                    border-radius: 50%;
+                    text-align: center;
+                    color: #FFF;
+                    position: absolute;
+                    right: 10px;
+                    top: 0;
+                    text-align: center;
+                    font-family: Inter;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 16px;
+                }
+
+                #divHuongDanQR .item .phoneimg + span {
+                    display: block;
+                    color: #212121;
+                    font-family: Inter;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 16px;
+                }
+
+                #divHuongDanQR .item .phoneimg.so2:before {
+                    content: '';
+                    width: 37px;
+                    height: 37px;
+                    background: url(/Content/images/scan_phone_2.svg) center no-repeat;
+                    background-size: contain;
+                    position: absolute;
+                    right: 35px;
+                    top: -5px;
+                }
+
+    .center-sign #logo a {
+        margin: 0;
+    }
+    [id*="AADIV4"] img {
+        max-width: 100px;
+        width: auto;
+        height: auto;
+    }
+    @media screen and (max-width: 768px) {
+        #divHuongDanQR .item {
+            float: none;
+            margin: 0 auto 16px;
+        }
+
+            #divHuongDanQR .item:last-child {
+                margin-right: auto;
+            }
+    }
+</style>
+<div class="center-sign">
+    <div id="login">
+            <div class="green-field">
+                <div class="text-green">
+                    <strong>Hệ sinh thái CBC Group</strong>
+                    <span>
+                       CBC Group được thành lập từ năm 2010, hoạt động trong lĩnh vực phân phối, công nghệ và thương mại điện tử.
+                    </span>
+                    <ul class="boxlogo-green">
+						
+                        <li>
+							<label>
+								<a id="aCha" href="https://cbc.com.vn" target="_blank">
+											<img src="cbcgroup-asset/Images/cbc-trading-logo.jpg" width="100" height="auto">
+									<span>CBC Trading là một trong những nhà phân phối lớn nhất ngành hàng Mẹ & Bé tại Việt Nam.</span>
+								</a>
+							</label>
+						</li>
+						
+                        <li>
+							<label>
+								<a id="aCha" href="https://coolmom.vn" target="_blank">
+											<img src="cbcgroup-asset/Images/coolmom-logo.png" width="100" height="auto">
+									<span>Coolmom là thương hiệu đồ dùng cao cấp dành cho Mẹ & Bé.</span>
+								</a>
+							</label>
+						</li>
+						
+						<li>
+							<label>
+								<a id="aCha" href="https://webbi.asia" target="_blank">
+											<img src="cbcgroup-asset/Images/webbi-logo.png" width="100" height="auto">
+									<span>Webbi là nền tảng tạo website, đăng kí tên miền, quảng cáo trực tuyến và dịch vụ thương mại điện tử.</span>
+								</a>
+							</label>
+						</li>
+                        
+                    </ul>
+                </div>
+            </div>
+    </div>
+</div>
+	</div>
+    <script src="cbcgroup-asset/Scripts/jquery-1.10.2.js"></script>
+    <script src="cbcgroup-asset/Scripts/bootstrap.min.js"></script>
+    <script src="cbcgroup-asset/Scripts/bootstrap.js"></script>
+    <script src="cbcgroup-asset/Scripts/site.js"></script>
+</body>
+</html>
